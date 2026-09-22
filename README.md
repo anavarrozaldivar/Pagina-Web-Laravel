@@ -268,6 +268,30 @@ ADMIN_PASSWORD="use-a-password-with-at-least-12-characters"
 
 Never commit `.env`, `APP_KEY`, database credentials or `ADMIN_PASSWORD` to GitHub.
 
+## Deploying to Render
+
+The repository includes a `Dockerfile` for Render. When creating the Web Service, select the repository and choose **Docker** as the runtime.
+
+Use the PostgreSQL database provided by Render and configure:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=your-generated-key
+APP_URL=https://your-render-domain.onrender.com
+DB_CONNECTION=pgsql
+DB_HOST=your-render-postgres-host
+DB_PORT=5432
+DB_DATABASE=your-render-postgres-database
+DB_USERNAME=your-render-postgres-user
+DB_PASSWORD=your-render-postgres-password
+ADMIN_NAME="Your name"
+ADMIN_EMAIL=admin@your-domain.com
+ADMIN_PASSWORD="use-a-password-with-at-least-12-characters"
+```
+
+The Docker image installs dependencies, compiles the frontend, runs migrations and starts Apache. Render's free web services may sleep after inactivity.
+
 ## Project structure
 
 ```text
