@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+}
+
+input,
+select,
+textarea {
+    color: #111827 !important;
+    background-color: #ffffff !important;
+    border-color: #d1d5db;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #6b7280 !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #111827 !important;
+    box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08) !important;
+    outline: none !important;
+}
+
+input[type="checkbox"] {
+    appearance: auto;
+    background-color: #ffffff !important;
+    accent-color: #111827 !important;
+    cursor: pointer;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    background-color: #111827;
+    color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: #d1d5db;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #374151;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+}
