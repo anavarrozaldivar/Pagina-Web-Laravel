@@ -1,30 +1,53 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    @php($productName = config('app.name') === 'Laravel' ? 'Admin Kit' : config('app.name', 'Admin Kit'))
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $productName }} · {{ request()->routeIs('register') ? 'Crear cuenta' : 'Acceso' }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="guest-home">
+    <div class="guest-shell">
+        <aside class="guest-aside">
+            <a href="{{ url('/') }}" class="guest-brand">
+                <span class="product-brand-mark">A</span>
+                <span>
+                    <strong>{{ $productName }}</strong>
+                    <small>Control room</small>
+                </span>
+            </a>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+            <div class="guest-aside-copy">
+                <p class="eyebrow"><span></span> {{ request()->routeIs('register') ? 'Empieza con orden' : 'Tu espacio de control' }}</p>
+                <h1>{{ request()->routeIs('register') ? 'Una mejor forma de trabajar empieza aquí.' : 'Vuelve a tener el control.' }}</h1>
+                <p>{{ request()->routeIs('register') ? 'Crea tu cuenta y organiza usuarios, contenido y actividad desde un único lugar.' : 'Accede a una vista clara de tu operación, tus equipos y todo lo que está pasando.' }}</p>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="guest-aside-footer">
+                <span class="guest-status"><i></i> Sistema operativo</span>
+                <span>Roles · Contenido · Auditoría</span>
+            </div>
+        </aside>
+
+        <main class="guest-main">
+            <div class="guest-topline">
+                <span>{{ request()->routeIs('register') ? 'Nuevo espacio' : 'Acceso seguro' }}</span>
+                <a href="{{ url('/') }}">Volver al inicio <span aria-hidden="true">↗</span></a>
+            </div>
+
+            <div class="guest-card">
+                <div class="guest-heading">
+                    <p class="eyebrow"><span></span> {{ request()->routeIs('register') ? 'Registro' : 'Bienvenido' }}</p>
+                    <h2>{{ request()->routeIs('register') ? 'Crea tu cuenta' : 'Inicia sesión' }}</h2>
+                    <p>{{ request()->routeIs('register') ? 'Tardarás menos de un minuto.' : 'Continúa donde lo dejaste.' }}</p>
+                </div>
                 {{ $slot }}
             </div>
-        </div>
-    </body>
+
+            <p class="guest-legal">Al continuar aceptas el uso responsable de la plataforma.</p>
+        </main>
+    </div>
+</body>
 </html>

@@ -71,6 +71,34 @@
         </div>
 
 
+        {{-- Resumen --}}
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+            @foreach ([
+                ['label' => 'Total usuarios', 'value' => $userStats['total'], 'detail' => 'En el sistema', 'tone' => 'bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:text-blue-300'],
+                ['label' => 'Activos', 'value' => $userStats['active'], 'detail' => 'Acceso habilitado', 'tone' => 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-300'],
+                ['label' => 'Inactivos', 'value' => $userStats['inactive'], 'detail' => 'Revisar acceso', 'tone' => 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-300'],
+                ['label' => 'Administradores', 'value' => $userStats['admins'], 'detail' => 'Acceso completo', 'tone' => 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-300'],
+            ] as $stat)
+                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div class="flex items-start justify-between gap-3">
+                        <p class="text-xs font-bold uppercase tracking-[0.12em] text-gray-400 dark:text-gray-500">
+                            {{ $stat['label'] }}
+                        </p>
+                        <span class="h-2 w-2 rounded-full {{ $stat['tone'] }}"></span>
+                    </div>
+                    <p class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {{ $stat['value'] }}
+                    </p>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        {{ $stat['detail'] }}
+                    </p>
+                </div>
+            @endforeach
+
+        </div>
+
+
         {{-- Mensaje de éxito --}}
         @if (session('success'))
 

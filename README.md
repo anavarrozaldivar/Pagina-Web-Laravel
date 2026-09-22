@@ -185,7 +185,7 @@ http://127.0.0.1:8000
 
 ## Demo administrator
 
-The seeders create a demo administrator:
+For local development, the seeders create a demo administrator with these fallback credentials:
 
 ```text
 Email: admin@example.com
@@ -193,6 +193,16 @@ Password: password
 ```
 
 Change these credentials before deploying the application to production.
+
+For production, configure these variables before running the seeders:
+
+```env
+ADMIN_NAME="Your name"
+ADMIN_EMAIL=admin@your-domain.com
+ADMIN_PASSWORD="use-a-password-with-at-least-12-characters"
+```
+
+The production seeder stops with an error when `ADMIN_PASSWORD` is missing or too short.
 
 ## Development
 
@@ -227,6 +237,36 @@ Make sure:
 * Production database credentials are configured
 * Demo credentials are changed
 * Storage permissions are correctly configured
+
+## Deploying to Railway
+
+The repository includes `railway.json` with the build, migration and health-check commands.
+
+1. Create a Railway project and deploy this GitHub repository.
+2. Add a MySQL service to the project.
+3. Configure these variables in the application service:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-railway-domain.up.railway.app
+APP_KEY=generate-a-secure-key-locally
+DB_CONNECTION=mysql
+DB_HOST=${{MySQL.MYSQLHOST}}
+DB_PORT=${{MySQL.MYSQLPORT}}
+DB_DATABASE=${{MySQL.MYSQLDATABASE}}
+DB_USERNAME=${{MySQL.MYSQLUSER}}
+DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
+ADMIN_NAME="Your name"
+ADMIN_EMAIL=admin@your-domain.com
+ADMIN_PASSWORD="use-a-password-with-at-least-12-characters"
+```
+
+4. Deploy the service. Railway will install dependencies, build Vite assets, run migrations and start Laravel.
+5. Run `php artisan db:seed --force` once from the Railway shell if you want the demo records in the hosted environment.
+6. Generate a domain from Railway or connect your own domain with HTTPS.
+
+Never commit `.env`, `APP_KEY`, database credentials or `ADMIN_PASSWORD` to GitHub.
 
 ## Project structure
 

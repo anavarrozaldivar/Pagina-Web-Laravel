@@ -14,23 +14,29 @@ class ContentController extends Controller
      * Mostrar todos los contenidos.
      */
     public function index(Request $request): View
-{
-    $contents = Content::query()
-        ->when($request->search, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        })
-        ->when($request->status, function ($query, $status) {
-            $query->where('status', $status);
-        })
-        ->latest()
-        ->paginate(10)
-        ->withQueryString();
+    {
+        $contents = Content::query()
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            })
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
-    return view('admin.contents.index', compact('contents'));
-}
+        $contentStats = [
+            'total' => Content::count(),
+            'published' => Content::where('status', 'published')->count(),
+            'drafts' => Content::where('status', 'draft')->count(),
+        ];
+
+        return view('admin.contents.index', compact('contents', 'contentStats'));
+    }
 
     /**
      * Mostrar formulario para crear contenido.

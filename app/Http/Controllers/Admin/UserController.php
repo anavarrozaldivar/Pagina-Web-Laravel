@@ -42,7 +42,14 @@ class UserController extends Controller
             ->orderBy('label')
             ->get();
 
-        return view('admin.users.index', compact('users', 'roles'));
+        $userStats = [
+            'total' => User::count(),
+            'active' => User::where('status', true)->count(),
+            'inactive' => User::where('status', false)->count(),
+            'admins' => User::whereHas('roleRelation', fn ($query) => $query->where('name', 'admin'))->count(),
+        ];
+
+        return view('admin.users.index', compact('users', 'roles', 'userStats'));
     }
 
     /**

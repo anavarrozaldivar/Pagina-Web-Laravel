@@ -10,6 +10,10 @@ $isAdmin = $currentUser?->roleRelation?->name === 'admin';
 $appName = \App\Models\Setting::where('key', 'app_name')->value('value')
     ?? config('app.name', 'Starter Kit');
 
+$appName = in_array($appName, ['Laravel', 'Laravel Admin Kit'], true)
+    ? 'Admin Kit'
+    : $appName;
+
 $logoPath = \App\Models\Setting::where('key', 'logo_path')->value('value');
 
 $hasPermission = function (string $permission) use ($currentUser, $isAdmin): bool {

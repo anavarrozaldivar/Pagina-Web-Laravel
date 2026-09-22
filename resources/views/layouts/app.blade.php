@@ -13,6 +13,10 @@
         $appName = \App\Models\Setting::where('key', 'app_name')->value('value')
             ?? config('app.name', 'Starter Kit');
 
+            $appName = in_array($appName, ['Laravel', 'Laravel Admin Kit'], true)
+                ? 'Admin Kit'
+                : $appName;
+
         $themeMode = \App\Models\Setting::where('key', 'theme_mode')->value('value')
             ?? 'system';
 

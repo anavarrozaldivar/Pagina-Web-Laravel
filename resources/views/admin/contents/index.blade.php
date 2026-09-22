@@ -11,11 +11,11 @@
             $isAdmin
             || $currentUser->roleRelation?->permissions?->contains('name', 'contents.create');
 
-        $totalContents = $contents->total();
+        $totalContents = $contentStats['total'];
 
-        $publishedCount = \App\Models\Content::where('status', 'published')->count();
+        $publishedCount = $contentStats['published'];
 
-        $draftCount = \App\Models\Content::where('status', 'draft')->count();
+        $draftCount = $contentStats['drafts'];
     @endphp
 
     <div class="w-full space-y-6">
